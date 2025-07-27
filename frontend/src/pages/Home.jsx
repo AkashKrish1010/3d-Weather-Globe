@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import * as THREE from 'three'
@@ -6,6 +6,7 @@ import { EXRLoader } from 'three-stdlib'
 import Earth from '../components/Earth'
 import Navbar from '../components/Navbar' // import Navbar
 import '../App.css'
+import Spinner from '../components/Spinner'
 
 const WeatherLabel = ({ weather }) => {
   const groupRef = useRef()
@@ -41,9 +42,16 @@ const WeatherLabel = ({ weather }) => {
   )
 }
 
-const CustomEnvironment = ({ file }) => {
+const CustomEnvironment = ({ file, onLoad }) => {
   const texture = useLoader(EXRLoader, file)
-  texture.mapping = THREE.EquirectangularReflectionMapping
+
+  useEffect(() => {
+    if (texture) {
+      texture.mapping = THREE.EquirectangularReflectionMapping
+      onLoad() 
+    }
+  }, [texture])
+
   return <primitive attach="background" object={texture} />
 }
 
@@ -51,9 +59,11 @@ const Home = () => {
   const [city, setCity] = useState('')
   const [weather, setWeather] = useState(null)
   const [bgFile, setBgFile] = useState('/hdri/qwantani_dusk_2_puresky_2k.exr')
+  const [loading, setLoading] = useState(true)
 
   const fetchWeather = async () => {
-    if (!city) return
+     if (!city) return
+    setLoading(true) 
     const apiKey = import.meta.env.VITE_WEATHER_API_KEY
     try {
       const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
@@ -90,14 +100,20 @@ const Home = () => {
   return (
     <>
       <Navbar city={city} setCity={setCity} fetchWeather={fetchWeather} />
+      {loading && <Spinner />}
 
-      <Canvas>
+      <Canvas
+        onCreated={() => setLoading(false)}
+      >
         <Suspense fallback={null}>
           <ambientLight intensity={1} />
           <OrbitControls enableZoom={false} />
           <Earth scale={2} />
           <WeatherLabel weather={weather} />
-          <CustomEnvironment file={bgFile} />
+           <CustomEnvironment
+            file={bgFile}
+            onLoad={() => setLoading(false)} 
+          />
         </Suspense>
       </Canvas>
     </>
