@@ -54,7 +54,7 @@ const Home = () => {
 
   const fetchWeather = async () => {
     if (!city) return
-    const apiKey = '9b772d1da6c675bfdc1135eca3b367d1'
+    const apiKey = import.meta.env.VITE_WEATHER_API_KEY
     try {
       const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
       const data = await res.json()
