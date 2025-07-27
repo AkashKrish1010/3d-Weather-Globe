@@ -4,7 +4,7 @@ import { OrbitControls, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { EXRLoader } from 'three-stdlib'
 import Earth from '../components/Earth'
-import Navbar from '../components/Navbar' // import Navbar
+import Navbar from '../components/Navbar' 
 import '../App.css'
 import Spinner from '../components/Spinner'
 
