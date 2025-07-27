@@ -1,0 +1,51 @@
+body{
+    background-color: black;
+    margin:0;
+    padding: 0;
+}
+
+
+canvas{
+    height: 650px;
+}
+
+.search-box {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+}
+
+.search-box input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  color: white;
+}
+
+.search-box button {
+  padding: 8px 12px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.search-box button:hover {
+  background-color: #f0f0f0;
+}
+
+.weather-label {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 15px;
+  border-radius: 100%;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  width: 200px;
+}
