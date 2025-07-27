@@ -25,7 +25,7 @@ const Navbar = ({ city, setCity, fetchWeather }) => {
         />
         <button
           onClick={fetchWeather}
-          className="bg-white text-black px-3 py-1 rounded hover:bg-gray-200 font-semibold"
+          className="bg-white text-black px-3 py-1 rounded hover:bg-gray-200 font-semibold cursor-pointer transition duration-75"
         >
           Search
         </button>
@@ -33,7 +33,7 @@ const Navbar = ({ city, setCity, fetchWeather }) => {
 
       <button
         onClick={handleLogout}
-        className="hidden md:block hover:text-gray-400 hover:scale-105 transition"
+        className="hidden md:block hover:text-gray-400 hover:scale-105 transition cursor-pointer  duration-75"
       >
         Logout
       </button>
