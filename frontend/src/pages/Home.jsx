@@ -4,32 +4,32 @@ import { OrbitControls, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { EXRLoader } from 'three-stdlib'
 import Earth from '../components/Earth'
-import Navbar from '../components/Navbar' 
+import Navbar from '../components/Navbar'
 import '../App.css'
 import Spinner from '../components/Spinner'
 
 const WeatherLabel = ({ weather }) => {
 
   return (
-      <Html position={[0, 2, 0]} center>
-        <div className="weather-label">
-          {weather ? (
-            <>
-              <h3>{weather.name}</h3>
-              <div className='flex justify-center items-center'>
-                <img
-                  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                  alt='weather icon'
-                  className=' w-10 h-10 backdrop-blur-md rounded-full'
-                />
-                <p>{weather.weather[0].main} - {weather.main.temp}°C</p>
-              </div>
-            </>
-          ) : (
-            <p>Search a city</p>
-          )}
-        </div>
-      </Html>
+    <Html position={[0, 2, 0]} center>
+      <div className="weather-label">
+        {weather ? (
+          <>
+            <h3>{weather.name}</h3>
+            <div className='flex justify-center items-center'>
+              <img
+                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                alt='weather icon'
+                className=' w-10 h-10 backdrop-blur-md rounded-full'
+              />
+              <p>{weather.weather[0].main} - {weather.main.temp}°C</p>
+            </div>
+          </>
+        ) : (
+          <p>Search a city</p>
+        )}
+      </div>
+    </Html>
   )
 }
 
@@ -97,13 +97,10 @@ const Home = () => {
   return (
     <>
       <Navbar city={city} setCity={setCity} fetchWeather={fetchWeather} />
-      {loading && <Spinner />}
 
-      <Canvas
-        onCreated={() => setLoading(false)}
-      >
-        <Suspense fallback={null} >
-          <ambientLight  />
+      <Canvas onCreated={() => setLoading(false)}>
+        <Suspense fallback={<Html>loading ? <Spinner /> : null</Html>}>
+          <ambientLight />
           <OrbitControls enableZoom={false} />
           <Earth scale={2} />
           <WeatherLabel weather={weather} />
@@ -114,6 +111,7 @@ const Home = () => {
         </Suspense>
       </Canvas>
     </>
+
   )
 }
 
