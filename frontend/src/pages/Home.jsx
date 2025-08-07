@@ -4,22 +4,14 @@ import { OrbitControls, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { EXRLoader } from 'three-stdlib'
 import Earth from '../components/Earth'
-import Navbar from '../components/Navbar' // import Navbar
+import Navbar from '../components/Navbar' 
 import '../App.css'
 import Spinner from '../components/Spinner'
 
 const WeatherLabel = ({ weather }) => {
-  const groupRef = useRef()
-
-  useFrame(() => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += 0.003
-    }
-  })
 
   return (
-    <group ref={groupRef} position={[0, 2, 0]}>
-      <Html center>
+      <Html position={[0, 2, 0]} center>
         <div className="weather-label">
           {weather ? (
             <>
@@ -38,7 +30,6 @@ const WeatherLabel = ({ weather }) => {
           )}
         </div>
       </Html>
-    </group>
   )
 }
 
@@ -48,12 +39,18 @@ const CustomEnvironment = ({ file, onLoad }) => {
   useEffect(() => {
     if (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping
-      onLoad() 
+      onLoad()
     }
   }, [texture])
 
-  return <primitive attach="background" object={texture} />
+  return (
+    <>
+      <primitive attach="background" object={texture} />
+      <primitive attach="environment" object={texture} />
+    </>
+  )
 }
+
 
 const Home = () => {
   const [city, setCity] = useState('')
@@ -62,8 +59,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true)
 
   const fetchWeather = async () => {
-     if (!city) return
-    setLoading(true) 
+    if (!city) return
+    setLoading(true)
     const apiKey = import.meta.env.VITE_WEATHER_API_KEY
     try {
       const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
@@ -105,14 +102,14 @@ const Home = () => {
       <Canvas
         onCreated={() => setLoading(false)}
       >
-        <Suspense fallback={null}>
-          <ambientLight intensity={1} />
+        <Suspense fallback={null} >
+          <ambientLight  />
           <OrbitControls enableZoom={false} />
           <Earth scale={2} />
           <WeatherLabel weather={weather} />
-           <CustomEnvironment
+          <CustomEnvironment
             file={bgFile}
-            onLoad={() => setLoading(false)} 
+            onLoad={() => setLoading(false)}
           />
         </Suspense>
       </Canvas>

@@ -5,7 +5,6 @@ import axios from 'axios';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [newAcc, setnewAcc] = useState(false)
 
   const navigate = useNavigate();
 

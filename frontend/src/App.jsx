@@ -3,8 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './pages/Home';
-import ProtectedRoute from './components/ProtectedRoute.jsx'; // import this
-import Navbar from './components/Navbar.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx'; 
+
 
 const App = () => {
   return (
