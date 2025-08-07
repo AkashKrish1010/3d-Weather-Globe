@@ -33,7 +33,7 @@ const Navbar = ({ city, setCity, fetchWeather }) => {
 
       <button
         onClick={handleLogout}
-        className="hidden md:block hover:text-gray-400 hover:scale-105 transition cursor-pointer font-bold"
+        className="hidden md:block hover:text-gray-400 hover:scale-105 transition"
       >
         Logout
       </button>
